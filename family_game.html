@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family & Relationship Character Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --accent: #10b981;
+      --accent-subtle: #ecfdf5;
+      --border: #e2e8f0;
+      --border-focus: #94a3b8;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+      --shadow-hover: 0 10px 25px -3px rgba(15, 23, 42, 0.1);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-frame {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    /* Top Utility Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      color: var(--text);
+      border-color: var(--border-focus);
+    }
+
+    /* Stepper Bar */
+    .stepper {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 14px;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .step-item {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .step-item.active {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-item.completed {
+      color: var(--accent);
+    }
+
+    /* Main Container Card */
+    .main-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header in Panel */
+    .panel-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .panel-header h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .panel-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* ---------------------------------------------------- */
+    /* STEP 1: ADD MEMBERS */
+    /* ---------------------------------------------------- */
+    .sub-heading {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .quick-chips-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .preset-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .preset-chip:hover {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    /* Custom Form Inline */
+    .custom-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .custom-row select {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .custom-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .custom-row input:focus { border-color: var(--primary); }
+
+    .btn-add-inline {
+      padding: 10px 18px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-add-inline:hover { background: var(--primary-hover); }
+
+    /* Current Roster */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .roster-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .roster-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-card);
+    }
+
+    .roster-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .roster-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .roster-avatar {
+      width: 40px;
+      height: 40px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .roster-name {
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--text);
+    }
+    .roster-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-trash {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      border-radius: 6px;
+    }
+    .btn-trash:hover { color: #ef4444; }
+
+    .roster-traits-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .pill-trait {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .pill-trait .del-trait {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .pill-trait .del-trait:hover { opacity: 1; }
+
+    /* ---------------------------------------------------- */
+    /* STEP 2: ASSIGN TRAITS CLEAN VIEW */
+    /* ---------------------------------------------------- */
+    .member-tabs-slider {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+    }
+
+    .member-tab-btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .member-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .active-focus-banner {
+      background: var(--primary-subtle);
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .active-focus-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+
+    .cat-btn {
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cat-btn.active {
+      background: var(--text);
+      color: white;
+      border-color: var(--text);
+    }
+
+    /* Vocabulary Cards Grid */
+    .vocab-clean-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .vocab-clean-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .vocab-clean-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .vocab-clean-card.is-assigned {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    .vocab-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .vocab-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .vocab-clean-card.is-assigned .vocab-title {
+      color: #065f46;
+    }
+
+    .vocab-audio-btn {
+      background: #f1f5f9;
+      border: none;
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+    .vocab-audio-btn:hover { color: var(--primary); background: #e2e8f0; }
+
+    .vocab-meaning {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .vocab-pt-tag {
+      font-size: 0.78rem;
+      color: #065f46;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+
+    .vocab-assign-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      padding-top: 6px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .vocab-clean-card.is-assigned .vocab-assign-action {
+      color: #059669;
+    }
+
+    /* ---------------------------------------------------- */
+    /* STEP 3: CLEAN RESULTS & STORY SHOWCASE */
+    /* ---------------------------------------------------- */
+    .story-hero-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      border-radius: 18px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .story-hero-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .story-hero-header h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .story-text-area {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 18px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .story-highlight-word {
+      color: #fef08a;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .story-btn-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-audio-hero {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-audio-hero:hover { background: var(--primary-hover); }
+
+    .btn-copy-hero {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-copy-hero:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* Portrait Cards */
+    .portrait-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .portrait-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .portrait-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .portrait-avatar {
+      font-size: 2rem;
+      width: 44px;
+      height: 44px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .portrait-name { font-weight: 800; font-size: 1.05rem; }
+    .portrait-role { font-size: 0.8rem; color: var(--text-muted); }
+
+    .portrait-snippet {
+      font-size: 0.88rem;
+      color: #334155;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      line-height: 1.45;
+    }
+
+    /* Bottom Navigation Controls */
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-primary-action {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary-action:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+    .btn-secondary-action {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-secondary-action:hover { background: #e2e8f0; }
+
+    @media (max-width: 600px) {
+      .main-panel { padding: 24px 16px; }
+      .custom-row { flex-direction: column; align-items: stretch; }
+      .bottom-bar { flex-direction: column-reverse; gap: 10px; }
+      .bottom-bar button { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+    <!-- Top Utility Bar -->
+    <div class="top-bar">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="masterclass.html" class="back-btn">
+          ← Vocabulary Masterclass
+        </a>
+        <a href="index.html" class="back-btn" style="color: #059669; border-color: #86efac; background: #ecfdf5;">
+          📝 Mariana's Homework
+        </a>
+      </div>
+      <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted);">
+        Family & Marriage Personality Game
+      </span>
+    </div>
+
+    <!-- Stepper Indicator -->
+    <div class="stepper">
+      <button class="step-item active" id="st-1" onclick="navTo(1)">
+        1. Choose Family & Spouse
+      </button>
+      <button class="step-item" id="st-2" onclick="navTo(2)">
+        2. Assign Personality
+      </button>
+      <button class="step-item" id="st-3" onclick="navTo(3)">
+        3. Reveal Story & Profiles
+      </button>
+    </div>
+
+    <!-- MAIN PANEL -->
+    <div class="main-panel">
+      
+      <!-- ============================================== -->
+      <!-- VIEW 1: CHOOSE FAMILY MEMBERS -->
+      <!-- ============================================== -->
+      <div id="view-1">
+        <div class="panel-header">
+          <h1>Who is in your family?</h1>
+          <p>Add your husband, wife, parents, in-laws, or children, then assign their personalities!</p>
+        </div>
+
+        <div class="sub-heading">💍 Spouses & Partners</div>
+        <div class="quick-chips-grid">
+          <button class="preset-chip" onclick="quickAdd('My Husband', 'Husband', '🤵')"><span>🤵</span> Husband</button>
+          <button class="preset-chip" onclick="quickAdd('My Wife', 'Wife', '👰')"><span>👰</span> Wife</button>
+          <button class="preset-chip" onclick="quickAdd('Fiancé', 'Fiancé / Partner', '💍')"><span>💍</span> Fiancé / Partner</button>
+          <button class="preset-chip" onclick="quickAdd('Spouse', 'Spouse', '🧑‍🤝‍🧑')"><span>🧑‍🤝‍🧑</span> Spouse</button>
+        </div>
+
+        <div class="sub-heading">👨‍👩‍👧‍👦 Immediate & Extended Family</div>
+        <div class="quick-chips-grid">
+          <button class="preset-chip" onclick="quickAdd('Mom', 'Mother', '👩')"><span>👩</span> Mom</button>
+          <button class="preset-chip" onclick="quickAdd('Dad', 'Father', '👨')"><span>👨</span> Dad</button>
+          <button class="preset-chip" onclick="quickAdd('Son', 'Son', '👦')"><span>👦</span> Son</button>
+          <button class="preset-chip" onclick="quickAdd('Daughter', 'Daughter', '👧')"><span>👧</span> Daughter</button>
+          <button class="preset-chip" onclick="quickAdd('Grandma', 'Grandmother', '👵')"><span>👵</span> Grandma</button>
+          <button class="preset-chip" onclick="quickAdd('Grandpa', 'Grandfather', '👴')"><span>👴</span> Grandpa</button>
+          <button class="preset-chip" onclick="quickAdd('Sister', 'Sister', '👧')"><span>👧</span> Sister</button>
+          <button class="preset-chip" onclick="quickAdd('Brother', 'Brother', '👦')"><span>👦</span> Brother</button>
+          <button class="preset-chip" onclick="quickAdd('Mother-in-law', 'In-Law', '🧓')"><span>🧓</span> Mother-in-law</button>
+          <button class="preset-chip" onclick="quickAdd('Father-in-law', 'In-Law', '👴')"><span>👴</span> Father-in-law</button>
+          <button class="preset-chip" onclick="quickAdd('Cousin', 'Cousin', '🧑')"><span>🧑</span> Cousin</button>
+          <button class="preset-chip" onclick="quickAdd('Family Pet', 'Pet', '🐶')"><span>🐶</span> Pet</button>
+        </div>
+
+        <div class="sub-heading">✨ Or Add Custom Person / Name</div>
+        <div class="custom-row">
+          <select id="custom-emoji">
+            <option value="🤵">🤵 Husband / Man</option>
+            <option value="👰">👰 Wife / Woman</option>
+            <option value="👩">👩 Woman</option>
+            <option value="👨">👨 Man</option>
+            <option value="👵">👵 Elder Woman</option>
+            <option value="👴">👴 Elder Man</option>
+            <option value="👧">👧 Girl / Daughter</option>
+            <option value="👦">👦 Boy / Son</option>
+            <option value="🧑">🧑 Person</option>
+            <option value="🐶">🐶 Dog</option>
+            <option value="🐱">🐱 Cat</option>
+          </select>
+          <input type="text" id="custom-name" placeholder="Name (e.g. My Husband Lucas, Aunt Ana)" />
+          <input type="text" id="custom-role" placeholder="Relationship (e.g. Husband, Stepmother)" style="max-width: 180px;" />
+          <button class="btn-add-inline" onclick="addCustom()">+ Add</button>
+        </div>
+
+        <div class="sub-heading" style="display: flex; justify-content: space-between;">
+          <span>Your Family Deck (<span id="roster-count">0</span>)</span>
+        </div>
+
+        <div class="roster-grid" id="roster-deck">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="bottom-bar">
+          <div></div>
+          <button class="btn-primary-action" onclick="navTo(2)">
+            Continue: Assign Personality Traits →
+          </button>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 2: ASSIGN PERSONALITY WORDS -->
+      <!-- ============================================== -->
+      <div id="view-2" style="display: none;">
+        <div class="panel-header" style="margin-bottom: 20px;">
+          <h1>Describe Your Family & Spouse</h1>
+          <p>Select a person, then click any personality card below to tag them with that trait.</p>
+        </div>
+
+        <!-- Slider of family members -->
+        <div class="member-tabs-slider" id="member-tabs-container"></div>
+
+        <!-- Active Focus Banner -->
+        <div class="active-focus-banner">
+          <div class="active-focus-title" id="focus-banner-text">
+            <span>🤵</span> Describing My Husband
+          </div>
+          <div id="focus-traits-pills" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+        </div>
+
+        <!-- Category selector -->
+        <div class="category-pills">
+          <button class="cat-btn active" onclick="filterCat('all', this)">All Traits</button>
+          <button class="cat-btn" onclick="filterCat('relationships', this)">💍 Marriage & Love</button>
+          <button class="cat-btn" onclick="filterCat('family', this)">👨‍👩‍👧 Family & Looks</button>
+          <button class="cat-btn" onclick="filterCat('work', this)">💼 Work & Habits</button>
+          <button class="cat-btn" onclick="filterCat('personality', this)">✨ Personality & Vibe</button>
+        </div>
+
+        <!-- Clean Grid of Vocabulary Cards -->
+        <div class="vocab-clean-grid" id="clean-vocab-grid"></div>
+
+        <div class="bottom-bar">
+          <button class="btn-secondary-action" onclick="navTo(1)">
+            ← Back to Family Roster
+          </button>
+          <button class="btn-primary-action" onclick="navTo(3)">
+            See Full Story & Results →
+          </button>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: FINAL STORY & SHOWCASE -->
+      <!-- ============================================== -->
+      <div id="view-3" style="display: none;">
+        <div class="panel-header" style="margin-bottom: 24px;">
+          <h1>Family Character Portrait</h1>
+          <p>Here is how your family was described, compiled into a natural English narrative.</p>
+        </div>
+
+        <!-- Hero Story Card -->
+        <div class="story-hero-card">
+          <div class="story-hero-header">
+            <h3>📖 The Family Story</h3>
+            <div class="story-btn-row">
+              <button class="btn-audio-hero" onclick="speakNarrative()">
+                🔊 Play Audio
+              </button>
+              <button class="btn-copy-hero" onclick="copyStory()">
+                📋 Copy Text
+              </button>
+            </div>
+          </div>
+          <div class="story-text-area" id="final-story-box"></div>
+        </div>
+
+        <!-- Individual Portrait Cards -->
+        <div class="sub-heading">Individual Member Profiles</div>
+        <div class="portrait-grid" id="portraits-container"></div>
+
+        <div class="bottom-bar">
+          <button class="btn-secondary-action" onclick="navTo(2)">
+            ← Edit Traits
+          </button>
+          <button class="btn-primary-action" onclick="navTo(1)">
+            🔄 Build Another Family
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Rich Vocabulary Catalog including Husband, Marriage & Family Traits
+    const traitList = [
+      // Relationships & Marriage
+      { 
+        id: "better_half", 
+        cat: "relationships", 
+        term: "The better half", 
+        pt: "A minha cara-metade", 
+        def: "An affectionate idiom for one's husband or wife.", 
+        sentence: (n) => `${n} is truly my better half who always brings out the best in me.` 
+      },
+      { 
+        id: "supportive_spouse", 
+        cat: "relationships", 
+        term: "Supportive partner", 
+        pt: "Parceiro(a) companheiro(a)", 
+        def: "Always encouraging, loyal, and helpful in all life moments.", 
+        sentence: (n) => `${n} is an incredibly supportive partner through every challenge.` 
+      },
+      { 
+        id: "partner_in_crime", 
+        cat: "relationships", 
+        term: "Partner in crime", 
+        pt: "Cúmplice / Parceiro(a) pra tudo", 
+        def: "A close companion who shares all adventures and fun together.", 
+        sentence: (n) => `${n} is my favorite partner in crime for all weekend adventures.` 
+      },
+      { 
+        id: "family_oriented", 
+        cat: "relationships", 
+        term: "Family-oriented", 
+        pt: "Muito apegado(a) à família", 
+        def: "Prioritizes family above everything else.", 
+        sentence: (n) => `${n} is deeply family-oriented and loves spending quality time at home.` 
+      },
+
+      // Family & Appearance
+      { 
+        id: "breadwinner", 
+        cat: "family", 
+        term: "Breadwinner", 
+        pt: "Provedor(a) da casa", 
+        def: "Main earner who supports the family financially.", 
+        sentence: (n) => `${n} is the hardworking breadwinner who provides for the household.` 
+      },
+      { 
+        id: "takes_after", 
+        cat: "family", 
+        term: "Takes after (someone)", 
+        pt: "Puxar a / parecer-se com", 
+        def: "Resembles an ancestor in personality or looks.", 
+        sentence: (n) => `${n} strongly takes after older relatives in kindness and character.` 
+      },
+      { 
+        id: "spitting_image", 
+        cat: "family", 
+        term: "Spitting image of", 
+        pt: "A cara esculpida de", 
+        def: "Looking identical or remarkably like someone else.", 
+        sentence: (n) => `${n} is the spitting image of their parents.` 
+      },
+      { 
+        id: "close_knit", 
+        cat: "family", 
+        term: "Close-knit", 
+        pt: "Muito unido(a) à família", 
+        def: "Deeply bonded, caring, and supportive.", 
+        sentence: (n) => `${n} always keeps the family close-knit and united.` 
+      },
+      { 
+        id: "protective", 
+        cat: "family", 
+        term: "Protective", 
+        pt: "Protetor(a)", 
+        def: "Always looking out for the safety and happiness of loved ones.", 
+        sentence: (n) => `${n} is fiercely protective and always looks after everyone.` 
+      },
+
+      // Work & Daily Habits
+      { 
+        id: "early_bird", 
+        cat: "work", 
+        term: "Early bird", 
+        pt: "Pessoa madrugadora", 
+        def: "Wakes up early with high morning energy.", 
+        sentence: (n) => `${n} is a classic early bird who wakes up before everyone else.` 
+      },
+      { 
+        id: "night_owl", 
+        cat: "work", 
+        term: "Night owl", 
+        pt: "Pessoa noturna / coruja", 
+        def: "Stays up late and thrives during evening hours.", 
+        sentence: (n) => `${n} is a total night owl who stays up late studying or relaxing.` 
+      },
+      { 
+        id: "runs_errands", 
+        cat: "work", 
+        term: "Runs errands", 
+        pt: "Faz tarefas na rua", 
+        def: "Always out doing chores, grocery shopping, or banking.", 
+        sentence: (n) => `${n} is always running errands to keep the household running smoothly.` 
+      },
+      { 
+        id: "couch_potato", 
+        cat: "work", 
+        term: "Couch potato", 
+        pt: "Preguiçoso(a) de sofá", 
+        def: "Loves to relax on the couch and watch movies.", 
+        sentence: (n) => `On Sunday afternoons, ${n} turns into a relaxed couch potato.` 
+      },
+      { 
+        id: "heavy_workload", 
+        cat: "work", 
+        term: "Heavy workload", 
+        pt: "Carga pesada de trabalho", 
+        def: "Has numerous deadlines and high responsibilities.", 
+        sentence: (n) => `${n} manages a heavy workload during the week with great discipline.` 
+      },
+
+      // Personality & Vibe
+      { 
+        id: "easy_going", 
+        cat: "personality", 
+        term: "Easy-going", 
+        pt: "Tranquilo(a) / Calmo(a)", 
+        def: "Calm, relaxed, and never stressed over small things.", 
+        sentence: (n) => `${n} is wonderfully easy-going and a joy to be around.` 
+      },
+      { 
+        id: "down_to_earth", 
+        cat: "personality", 
+        term: "Down-to-earth", 
+        pt: "Pé no chão / Humilde", 
+        def: "Practical, realistic, and sensible.", 
+        sentence: (n) => `${n} is remarkably down-to-earth and gives the most sensible advice.` 
+      },
+      { 
+        id: "stubborn", 
+        cat: "personality", 
+        term: "Stubborn", 
+        pt: "Teimoso(a)", 
+        def: "Firm in opinions and hard to persuade.", 
+        sentence: (n) => `${n} can be stubborn at times when they set their mind to a goal.` 
+      },
+      { 
+        id: "life_of_party", 
+        cat: "personality", 
+        term: "Life of the party", 
+        pt: "Alma da festa", 
+        def: "Energetic, humorous, and brings positive vibes to gatherings.", 
+        sentence: (n) => `Whenever the family gathers, ${n} is the life of the party with great humor.` 
+      },
+      { 
+        id: "neat_freak", 
+        cat: "personality", 
+        term: "Neat freak", 
+        pt: "Maniaco(a) por ordem e limpeza", 
+        def: "Loves spotless cleaning and tidiness.", 
+        sentence: (n) => `${n} is a neat freak who keeps the home completely organized.` 
+      }
+    ];
+
+    // State
+    let family = [
+      { id: 1, name: "My Husband", role: "Husband", emoji: "🤵", traits: ["better_half", "supportive_spouse", "breadwinner"] },
+      { id: 2, name: "Mom", role: "Mother", emoji: "👩", traits: ["family_oriented", "early_bird", "close_knit"] },
+      { id: 3, name: "Dad", role: "Father", emoji: "👨", traits: ["down_to_earth", "runs_errands"] }
+    ];
+
+    let currentMemberId = 1;
+    let selectedCat = "all";
+
+    // Nav
+    function navTo(step) {
+      if (family.length === 0 && step > 1) {
+        alert("Please add at least one family member first!");
+        return;
+      }
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`view-${i}`).style.display = (i === step) ? 'block' : 'none';
+        const st = document.getElementById(`st-${i}`);
+        if (i === step) {
+          st.className = "step-item active";
+        } else if (i < step) {
+          st.className = "step-item completed";
+        } else {
+          st.className = "step-item";
+        }
+      });
+
+      if (step === 1) renderStep1();
+      if (step === 2) renderStep2();
+      if (step === 3) renderStep3();
+    }
+
+    // Step 1
+    function quickAdd(name, role, emoji) {
+      family.push({ id: Date.now(), name, role, emoji, traits: [] });
+      renderStep1();
+    }
+
+    function addCustom() {
+      const nameInput = document.getElementById("custom-name");
+      const roleInput = document.getElementById("custom-role");
+      const emojiInput = document.getElementById("custom-emoji");
+      const name = nameInput.value.trim() || "Relative";
+      const role = roleInput.value.trim() || "Family Member";
+      const emoji = emojiInput.value;
+
+      family.push({ id: Date.now(), name, role, emoji, traits: [] });
+      nameInput.value = "";
+      roleInput.value = "";
+      renderStep1();
+    }
+
+    function deleteMember(id) {
+      family = family.filter(m => m.id !== id);
+      if (currentMemberId === id && family.length > 0) currentMemberId = family[0].id;
+      renderStep1();
+    }
+
+    function removeTrait(memberId, traitId) {
+      const m = family.find(x => x.id === memberId);
+      if (m) {
+        m.traits = m.traits.filter(t => t !== traitId);
+        renderStep1();
+        if (document.getElementById("view-2").style.display === "block") renderStep2();
+      }
+    }
+
+    function renderStep1() {
+      document.getElementById("roster-count").innerText = family.length;
+      const deck = document.getElementById("roster-deck");
+      deck.innerHTML = "";
+
+      if (family.length === 0) {
+        deck.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 24px; font-size: 0.9rem;">No members added yet. Click one above!</div>`;
+        return;
+      }
+
+      family.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "roster-card";
+
+        let traitsHtml = m.traits.map(tId => {
+          const t = traitList.find(x => x.id === tId);
+          return t ? `<span class="pill-trait">${t.term} <span class="del-trait" onclick="removeTrait(${m.id}, '${tId}')">×</span></span>` : '';
+        }).join('');
+
+        card.innerHTML = `
+          <div>
+            <div class="roster-card-header">
+              <div class="roster-info">
+                <div class="roster-avatar">${m.emoji}</div>
+                <div>
+                  <div class="roster-name">${m.name}</div>
+                  <div class="roster-role">${m.role}</div>
+                </div>
+              </div>
+              <button class="btn-trash" onclick="deleteMember(${m.id})" title="Remove">🗑️</button>
+            </div>
+          </div>
+          <div class="roster-traits-mini">
+            ${traitsHtml || '<span style="font-size: 0.75rem; color: var(--text-muted);">No traits tagged yet</span>'}
+          </div>
+        `;
+        deck.appendChild(card);
+      });
+    }
+
+    // Step 2
+    function selectMemberTab(id) {
+      currentMemberId = id;
+      renderStep2();
+    }
+
+    function filterCat(cat, btn) {
+      selectedCat = cat;
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderVocabGrid();
+    }
+
+    function renderStep2() {
+      const tabs = document.getElementById("member-tabs-container");
+      tabs.innerHTML = "";
+      family.forEach(m => {
+        const isSel = m.id === currentMemberId;
+        const btn = document.createElement("button");
+        btn.className = `member-tab-btn ${isSel ? 'active' : ''}`;
+        btn.innerHTML = `<span>${m.emoji}</span> <span>${m.name}</span> <small style="opacity: 0.8; font-size: 0.75rem;">(${m.traits.length})</small>`;
+        btn.onclick = () => selectMemberTab(m.id);
+        tabs.appendChild(btn);
+      });
+
+      const activeMember = family.find(m => m.id === currentMemberId) || family[0];
+      if (activeMember) {
+        document.getElementById("focus-banner-text").innerHTML = `<span>${activeMember.emoji}</span> Describing ${activeMember.name} (${activeMember.role})`;
+        const pillsWrap = document.getElementById("focus-traits-pills");
+        pillsWrap.innerHTML = "";
+        if (activeMember.traits.length === 0) {
+          pillsWrap.innerHTML = `<span style="font-size: 0.8rem; color: #1e40af;">Click cards below to assign traits</span>`;
+        } else {
+          activeMember.traits.forEach(tId => {
+            const t = traitList.find(x => x.id === tId);
+            if (t) {
+              const span = document.createElement("span");
+              span.className = "pill-trait";
+              span.style.background = "white";
+              span.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)";
+              span.innerHTML = `${t.term} <span class="del-trait" onclick="removeTrait(${activeMember.id}, '${tId}')">×</span>`;
+              pillsWrap.appendChild(span);
+            }
+          });
+        }
+      }
+
+      renderVocabGrid();
+    }
+
+    function renderVocabGrid() {
+      const grid = document.getElementById("clean-vocab-grid");
+      grid.innerHTML = "";
+
+      const activeMember = family.find(m => m.id === currentMemberId) || family[0];
+      const filtered = selectedCat === "all" ? traitList : traitList.filter(t => t.cat === selectedCat);
+
+      filtered.forEach(trait => {
+        const isAssigned = activeMember ? activeMember.traits.includes(trait.id) : false;
+        const card = document.createElement("div");
+        card.className = `vocab-clean-card ${isAssigned ? 'is-assigned' : ''}`;
+        card.onclick = () => toggleTraitAssign(trait.id);
+        card.innerHTML = `
+          <div>
+            <div class="vocab-top-row">
+              <div class="vocab-title">${trait.term}</div>
+              <button class="vocab-audio-btn" onclick="playVoice(event, '${trait.term}')" title="Listen">🔊</button>
+            </div>
+            <div class="vocab-meaning">${trait.def}</div>
+          </div>
+          <div>
+            <div class="vocab-pt-tag">🇧🇷 ${trait.pt}</div>
+            <div class="vocab-assign-action">
+              <span>${isAssigned ? '✅ Assigned' : '+ Click to Assign'}</span>
+              <span>${isAssigned ? '✓' : '+'}</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleTraitAssign(traitId) {
+      const activeMember = family.find(m => m.id === currentMemberId);
+      if (!activeMember) return;
+      if (activeMember.traits.includes(traitId)) {
+        activeMember.traits = activeMember.traits.filter(t => t !== traitId);
+      } else {
+        activeMember.traits.push(traitId);
+      }
+      renderStep2();
+    }
+
+    // Step 3
+    function renderStep3() {
+      let story = "Let me introduce my family and loved ones! ";
+      const container = document.getElementById("portraits-container");
+      container.innerHTML = "";
+
+      family.forEach(m => {
+        const traitSentences = m.traits.map(tId => {
+          const t = traitList.find(x => x.id === tId);
+          return t ? t.sentence(m.name) : "";
+        }).filter(Boolean);
+
+        const desc = traitSentences.length > 0 
+          ? traitSentences.join(" ") 
+          : `${m.name} (${m.role}) is a truly beloved part of our life.`;
+
+        story += ` ${desc}`;
+
+        const card = document.createElement("div");
+        card.className = "portrait-card";
+        card.innerHTML = `
+          <div>
+            <div class="portrait-header">
+              <div class="portrait-avatar">${m.emoji}</div>
+              <div>
+                <div class="portrait-name">${m.name}</div>
+                <div class="portrait-role">${m.role}</div>
+              </div>
+            </div>
+          </div>
+          <div class="portrait-snippet">
+            "${desc}"
+          </div>
+          <button class="preset-chip" style="width: 100%; justify-content: center; font-size: 0.8rem;" onclick="playVoice(event, '${desc.replace(/'/g, "\\'")}')">
+            🔊 Listen to ${m.name}'s Profile
+          </button>
+        `;
+        container.appendChild(card);
+      });
+
+      story += " Together, we form a truly special and close-knit household!";
+
+      // Highlight target terms
+      let highlighted = story;
+      traitList.forEach(t => {
+        const re = new RegExp(`\\b(${t.term})\\b`, 'gi');
+        highlighted = highlighted.replace(re, `<span class="story-highlight-word">$1</span>`);
+      });
+
+      document.getElementById("final-story-box").innerHTML = `"${highlighted}"`;
+    }
+
+    function playVoice(e, text) {
+      if (e) e.stopPropagation();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.92;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function speakNarrative() {
+      const text = document.getElementById("final-story-box").innerText;
+      playVoice(null, text);
+    }
+
+    function copyStory() {
+      const text = document.getElementById("final-story-box").innerText;
+      navigator.clipboard.writeText(text);
+      alert("Story script copied!");
+    }
+
+    renderStep1();
+  </script>
+</body>
+</html>

@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mariana's Family & Idiom Homework | Match-Up Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-subtle: #ecfdf5;
+      --purple: #8b5cf6;
+      --purple-subtle: #f5f3ff;
+      --amber: #f59e0b;
+      --amber-subtle: #fffbeb;
+      --danger: #ef4444;
+      --danger-subtle: #fef2f2;
+      --border: #e2e8f0;
+      --border-focus: #94a3b8;
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+      --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.07);
+      --shadow-hover: 0 10px 25px -4px rgba(15, 23, 42, 0.12);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-frame {
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* Top Navigation Utility */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-left-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      color: var(--text);
+      border-color: var(--border-focus);
+      transform: translateY(-1px);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 99px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .toggle-chip.active {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+
+    /* Hero Banner */
+    .homework-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #4f46e5 100%);
+      color: white;
+      padding: 32px 30px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .homework-hero::after {
+      content: "👨‍👩‍👧‍👦";
+      position: absolute;
+      right: 20px;
+      bottom: -15px;
+      font-size: 7rem;
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .homework-hero h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .homework-hero p {
+      font-size: 1rem;
+      opacity: 0.92;
+      max-width: 650px;
+      line-height: 1.55;
+    }
+
+    /* Tabs Navigation */
+    .mode-tabs {
+      display: flex;
+      background: #e2e8f0;
+      padding: 5px;
+      border-radius: 16px;
+      gap: 6px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .mode-tab-btn {
+      flex: 1;
+      min-width: 170px;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .mode-tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .mode-tab-btn:hover:not(.active) {
+      color: var(--text);
+    }
+
+    /* Content Views */
+    .view-panel {
+      display: none;
+    }
+    .view-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======================================================= */
+    /* MODE 1: MATCHING BOARD */
+    /* ======================================================= */
+    .board-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .board-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Family Members Grid */
+    .family-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .member-match-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .member-match-card.drag-over {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      transform: scale(1.01);
+    }
+
+    .member-match-card.all-correct {
+      border-color: var(--accent);
+      background: #f0fdf4;
+    }
+
+    .member-match-card.has-error {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .member-avatar {
+      font-size: 1.9rem;
+      width: 46px;
+      height: 46px;
+      background: #f1f5f9;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .member-info {
+      flex: 1;
+    }
+
+    .member-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .member-tag {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .card-slot-area {
+      min-height: 80px;
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-content: flex-start;
+      background: #f8fafc;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .card-slot-area.selected-target {
+      border-color: var(--primary);
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .slot-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      font-style: italic;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* Word Bank Sidebar */
+    .word-bank-panel {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 20px;
+    }
+
+    .bank-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .bank-header h3 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bank-count {
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      padding: 3px 8px;
+      border-radius: 99px;
+      color: var(--text);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-btn {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .words-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 4px;
+      padding-top: 4px;
+    }
+
+    /* Word Chip Styles */
+    .word-chip {
+      display: inline-flex;
+      flex-direction: column;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 7px 11px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .word-chip:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+    }
+
+    .word-chip.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .word-chip.is-idiom {
+      border-left: 4px solid var(--purple);
+    }
+
+    .word-chip.is-habit {
+      border-left: 4px solid var(--accent);
+    }
+
+    .word-chip.is-detail {
+      border-left: 4px solid var(--amber);
+    }
+
+    .chip-main {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-speak-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 2px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .chip-speak-btn:hover { opacity: 1; transform: scale(1.15); }
+
+    .chip-pt {
+      font-size: 0.72rem;
+      color: #059669;
+      font-weight: 600;
+      margin-top: 2px;
+      display: none;
+    }
+    .show-pt .chip-pt {
+      display: block;
+    }
+
+    /* Chip Inside Placed Slot */
+    .placed-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .placed-chip .remove-btn {
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border: none;
+      background: transparent;
+      padding: 0 2px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .placed-chip .remove-btn:hover {
+      color: var(--danger);
+    }
+
+    .placed-chip.correct {
+      border-color: #86efac;
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .placed-chip.incorrect {
+      border-color: #fca5a5;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    /* Matching Action Bar */
+    .action-bar-bottom {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      margin-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .progress-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; color: var(--text); }
+
+    .action-buttons-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-check {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-check:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--border-focus);
+      background: #f8fafc;
+    }
+
+    /* Score Feedback Modal / Banner */
+    .score-feedback-card {
+      display: none;
+      background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-card);
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======================================================= */
+    /* MODE 2: PRACTICE SENTENCES */
+    /* ======================================================= */
+    .sentences-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .sentence-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .sentence-card.answered-correct { border-color: var(--accent); background: #f0fdf4; }
+    .sentence-card.answered-wrong { border-color: var(--danger); background: #fef2f2; }
+
+    .sentence-member-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    .sentence-prompt {
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    .sentence-blank {
+      display: inline-block;
+      min-width: 140px;
+      border-bottom: 2px dashed #94a3b8;
+      color: var(--primary);
+      font-weight: 800;
+      padding: 0 6px;
+      text-align: center;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .option-btn:hover:not(:disabled) {
+      background: white;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .option-btn.selected-correct {
+      background: #10b981;
+      color: white;
+      border-color: #10b981;
+    }
+    .option-btn.selected-wrong {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .sentence-explanation {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    /* ======================================================= */
+    /* MODE 3: VOCABULARY REFERENCE GUIDE */
+    /* ======================================================= */
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .guide-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .guide-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .guide-term {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .guide-pt {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #065f46;
+      background: #ecfdf5;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .guide-def {
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .guide-example {
+      font-size: 0.85rem;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-left: 3px solid var(--primary);
+      border-radius: 6px;
+      color: #475569;
+      font-style: italic;
+    }
+
+    /* ======================================================= */
+    /* MODE 4: SPEAKING & RECORDING PRACTICE */
+    /* ======================================================= */
+    .speaking-container {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .speaking-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .speaking-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .speaking-frame-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    .speaking-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .speaking-btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .speaking-btn:hover { background: #f1f5f9; }
+    .speaking-btn.record-active { background: #ef4444; color: white; border-color: #ef4444; animation: pulse 1s infinite; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    /* Modal for Homework Report */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-card {
+      background: white;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body class="show-pt">
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-frame">
+
+    <!-- Top Navigation Links -->
+    <div class="top-nav">
+      <div class="nav-left-links">
+        <a href="masterclass.html" class="nav-btn">
+          ← Vocabulary Masterclass
+        </a>
+        <a href="family_game.html" class="nav-btn">
+          👨‍👩‍👧‍👦 Family Builder Game
+        </a>
+      </div>
+
+      <div class="top-controls">
+        <button class="toggle-chip active" id="pt-toggle-btn" onclick="togglePortuguese()">
+          <span>🇧🇷</span> Hints: ON
+        </button>
+        <button class="toggle-chip active" id="audio-toggle-btn" onclick="toggleAudioFx()">
+          <span>🔊</span> Sound: ON
+        </button>
+        <button class="nav-btn" onclick="openReportModal()">
+          📄 Homework Report
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="homework-hero">
+      <div class="hero-badge">
+        ✨ ESL B1–B2 Homework Assignment
+      </div>
+      <h1>Mariana's Family & Idiom Match-Up</h1>
+      <p>
+        In our Miro lesson, you mapped out your wonderful family and connected each person to natural English idioms, collocations, and habits. Drag or tap words from the bank to match them to the right family members!
+      </p>
+    </div>
+
+    <!-- Navigation Mode Tabs -->
+    <div class="mode-tabs">
+      <button class="mode-tab-btn active" id="tab-btn-1" onclick="switchMode(1)">
+        🧩 1. The Match-Up Board
+      </button>
+      <button class="mode-tab-btn" id="tab-btn-2" onclick="switchMode(2)">
+        ✍️ 2. Sentence Challenge (<span id="sentence-count-badge">0/10</span>)
+      </button>
+      <button class="mode-tab-btn" id="tab-btn-3" onclick="switchMode(3)">
+        📖 3. Whiteboard Idiom Guide
+      </button>
+      <button class="mode-tab-btn" id="tab-btn-4" onclick="switchMode(4)">
+        🗣️ 4. Speaking Practice
+      </button>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 1: MATCHING BOARD -->
+    <!-- ========================================================= -->
+    <div class="view-panel active" id="view-mode-1">
+      <div class="board-layout">
+        
+        <!-- Left: Family Member Cards -->
+        <div>
+          <div style="margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">
+              📋 Drop or tap into Mariana's family slots:
+            </span>
+            <span id="placed-summary" style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
+              0 of 28 words placed
+            </span>
+          </div>
+
+          <div class="family-cards-grid" id="family-cards-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Right: Word Bank Sticky Panel -->
+        <div>
+          <div class="word-bank-panel">
+            <div class="bank-header">
+              <h3><span>📦</span> Word Bank</h3>
+              <span class="bank-count" id="bank-remaining-count">28 items</span>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-tabs">
+              <button class="filter-btn active" onclick="filterBank('all', this)">All</button>
+              <button class="filter-btn" onclick="filterBank('idiom', this)">Idioms</button>
+              <button class="filter-btn" onclick="filterBank('habit', this)">Habits</button>
+              <button class="filter-btn" onclick="filterBank('detail', this)">Personal</button>
+            </div>
+
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.35;">
+              💡 <em>Tip: Click a chip to select it, then click any box on the left to place it. Or simply drag & drop!</em>
+            </div>
+
+            <div class="words-container" id="bank-words-container">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Bar -->
+      <div class="action-bar-bottom">
+        <div class="progress-stats">
+          <div class="stat-box">
+            <span class="stat-label">Progress</span>
+            <span class="stat-value" id="stat-progress">0%</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Correct Matches</span>
+            <span class="stat-value" id="stat-score" style="color: var(--accent);">0 / 28</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Status</span>
+            <span class="stat-value" id="stat-status" style="font-size: 1rem; color: var(--text-muted);">In Progress</span>
+          </div>
+        </div>
+
+        <div class="action-buttons-group">
+          <button class="btn-outline" onclick="giveClue()">
+            💡 Give Clue
+          </button>
+          <button class="btn-outline" onclick="resetBoard()">
+            🔄 Reset Board
+          </button>
+          <button class="btn-check" onclick="checkMatches()">
+            ✅ Check Homework
+          </button>
+        </div>
+      </div>
+
+      <!-- Score Feedback Card -->
+      <div class="score-feedback-card" id="feedback-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h2 style="font-size: 1.35rem;" id="feedback-title">🎉 Fantastic Job, Mariana!</h2>
+          <span style="font-size: 1.6rem;" id="feedback-stars">⭐⭐⭐⭐⭐</span>
+        </div>
+        <p style="font-size: 0.98rem; opacity: 0.95; line-height: 1.5; margin-bottom: 16px;" id="feedback-desc">
+          You matched all 28 expressions and family details correctly!
+        </p>
+        <button class="nav-btn" style="background: white; color: #065f46; border: none; font-weight: 800;" onclick="switchMode(2)">
+          Next Step: Take Sentence Challenge →
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 2: SENTENCE CHALLENGE -->
+    <!-- ========================================================= -->
+    <div class="view-panel" id="view-mode-2">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 6px;">✍️ Complete the Family Sentences</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Choose the best idiom or collocation to complete each real sentence about your family.
+        </p>
+      </div>
+
+      <div class="sentences-container" id="sentences-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 3: WHITEBOARD IDIOM GUIDE -->
+    <!-- ========================================================= -->
+    <div class="view-panel" id="view-mode-3">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 6px;">📖 Whiteboard Idiom & Vocabulary Reference</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Full explanations, audio pronunciation, and Portuguese equivalents for all whiteboard items.
+        </p>
+      </div>
+
+      <div class="guide-grid" id="guide-cards-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 4: SPEAKING PRACTICE -->
+    <!-- ========================================================= -->
+    <div class="view-panel" id="view-mode-4">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 6px;">🗣️ Spoken Production & Recording Challenge</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Use these conversation frames to practice speaking aloud in English about your family!
+        </p>
+      </div>
+
+      <div class="speaking-container" id="speaking-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: HOMEWORK REPORT -->
+  <div class="modal-overlay" id="report-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 style="font-size: 1.25rem; font-weight: 800;">📄 Mariana's Homework Summary</h2>
+        <button class="nav-btn" onclick="closeReportModal()">✕ Close</button>
+      </div>
+
+      <div id="report-content" style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+        <!-- Filled by JS -->
+      </div>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+        <button class="btn-outline" onclick="copyReportText()">📋 Copy Text</button>
+        <button class="btn-check" onclick="window.print()">🖨️ Print / Save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // 1. DATA DEFINITIONS (Derived 100% from Miro Board)
+    // =========================================================
+    const familyMembers = [
+      {
+        id: "husband",
+        name: "Husband / Partner",
+        role: "Marital Partner",
+        emoji: "🤵",
+        expected: ["your_better_half", "early_bird"]
+      },
+      {
+        id: "father",
+        name: "Father",
+        role: "Parent",
+        emoji: "👨‍🦳",
+        expected: ["easy_going", "generous"]
+      },
+      {
+        id: "mother",
+        name: "Mother",
+        role: "Parent",
+        emoji: "👩‍🦳",
+        expected: ["stubborn", "neat_freak", "busy_body", "unyielding"]
+      },
+      {
+        id: "brother_older",
+        name: "Brother (Older)",
+        role: "Sibling",
+        emoji: "🤠",
+        expected: ["down_to_earth", "horse_riding", "cowboys_outdoors"]
+      },
+      {
+        id: "brother_middle",
+        name: "Middle Brother",
+        role: "Sibling",
+        emoji: "🤜🤛",
+        expected: ["partner_in_crime", "protective"]
+      },
+      {
+        id: "sister_in_laws",
+        name: "Sister-in-Laws",
+        role: "In-Laws",
+        emoji: "👯‍♀️",
+        expected: ["spitting_image", "night_owl", "socialite", "life_of_party", "expressive_sister"]
+      },
+      {
+        id: "brother_in_law",
+        name: "Brother-in-Law",
+        role: "In-Law",
+        emoji: "🛋️",
+        expected: ["couch_potato"]
+      },
+      {
+        id: "cousin_f",
+        name: "Cousin (Female)",
+        role: "Extended Family",
+        emoji: "👭",
+        expected: ["close_knit"]
+      },
+      {
+        id: "niece_15_monaco",
+        name: "Niece (15 y.o.)",
+        role: "Niece in Monaco",
+        emoji: "🩰",
+        expected: ["lives_monaco", "dancing", "deep_faith", "introvert"]
+      },
+      {
+        id: "niece_15_dorm",
+        name: "Niece (15 y.o.)",
+        role: "Niece in Dormitory",
+        emoji: "🎒",
+        expected: ["expressive_niece", "excitable", "dormitory"]
+      },
+      {
+        id: "nephew_13",
+        name: "Nephew (13 y.o.)",
+        role: "Godson (Mariana is GodMother)",
+        emoji: "⚽",
+        expected: ["godmother", "live_football", "energetic"]
+      },
+      {
+        id: "nephew_maturing",
+        name: "Nephew (Maturing)",
+        role: "Nephew",
+        emoji: "🌱",
+        expected: ["maturing", "socialising"]
+      },
+      {
+        id: "nephew_10",
+        name: "Nephew (10 y.o.)",
+        role: "Youngest Nephew",
+        emoji: "🎈",
+        expected: ["playful", "mixture_all"]
+      },
+      {
+        id: "mariana_theme",
+        name: "Mariana / Family Themes",
+        role: "Personal & General Reflections",
+        emoji: "🕯️",
+        expected: ["burn_candle", "takes_after", "kids_change_family"]
+      }
+    ];
+
+    const wordsCatalog = [
+      // Idioms
+      { id: "your_better_half", text: "Your better half", type: "idiom", pt: "Cara-metade", def: "Affectionate idiom for one's husband or wife.", ex: "My husband is my better half; we complement each other perfectly." },
+      { id: "early_bird", text: "Early bird", type: "idiom", pt: "Madrugador(a)", def: "Someone who naturally gets up early in the morning.", ex: "He is an early bird who starts working at 6:00 AM." },
+      { id: "night_owl", text: "Night owl", type: "idiom", pt: "Pessoa noturna / coruja", def: "Someone who thrives and stays up late into the night.", ex: "My sister-in-laws are total night owls chatting until 2 AM." },
+      { id: "spitting_image", text: "Spitting image of each other", type: "idiom", pt: "A cara de um, focinho de outro", def: "An exact physical likeness or double.", ex: "They look so identical they are the spitting image of each other." },
+      { id: "down_to_earth", text: "Down to earth", type: "idiom", pt: "Pé no chão / humilde", def: "Practical, realistic, unpretentious, and humble.", ex: "My brother is remarkably down to earth despite his success." },
+      { id: "couch_potato", text: "Couch potato", type: "idiom", pt: "Preguiçoso(a) de sofá", def: "A lazy person who spends leisure time watching TV.", ex: "On Sundays, my brother-in-law is a complete couch potato." },
+      { id: "neat_freak", text: "Neat freak", type: "idiom", pt: "Maníaco(a) por limpeza", def: "Someone obsessed with tidiness and cleanliness.", ex: "My mother is a neat freak who wipes down the counters five times a day." },
+      { id: "busy_body", text: "Busybody", type: "idiom", pt: "Intrometido(a) / que quer saber de tudo", def: "A meddling person who pries into everyone's business.", ex: "She loves knowing all the family gossip like a typical busybody." },
+      { id: "partner_in_crime", text: "Partner in crime", type: "idiom", pt: "Parceiro(a) pra tudo / cúmplice", def: "A good friend or sibling with whom one shares adventures.", ex: "My middle brother was always my partner in crime growing up." },
+      { id: "life_of_party", text: "Life of the party", type: "idiom", pt: "Alma da festa", def: "An energetic, lively person who makes any event fun.", ex: "She brings immense laughter and is always the life of the party." },
+      { id: "close_knit", text: "Close-knit", type: "idiom", pt: "Família muito unida", def: "Bound tightly by emotional, supportive bonds.", ex: "We stay in touch every single week because we are close-knit." },
+      { id: "burn_candle", text: "I burn the candle at both ends", type: "idiom", pt: "Trabalhar até a exaustão / não parar", def: "Exhausting oneself by waking early and sleeping late working hard.", ex: "Between my job and studies, I really burn the candle at both ends." },
+      { id: "takes_after", text: "Takes after", type: "idiom", pt: "Puxar a / parecer-se com", def: "Resembles a parent or older relative in habits or looks.", ex: "He really takes after his father in temperament." },
+
+      // Habits & Personality
+      { id: "easy_going", text: "Easy going", type: "habit", pt: "Tranquilo(a) / calmo(a)", def: "Relaxed and tolerant in attitude or manner.", ex: "My father is very easy going and never gets upset." },
+      { id: "generous", text: "Generous", type: "habit", pt: "Generoso(a)", def: "Readily giving more of something than strictly necessary.", ex: "He has a generous heart and always helps anyone in need." },
+      { id: "stubborn", text: "Stubborn", type: "habit", pt: "Teimoso(a)", def: "Determined not to change an attitude or opinion.", ex: "Once she makes up her mind, she is delightfully stubborn." },
+      { id: "unyielding", text: "Unyielding (unweilding)", type: "habit", pt: "Inflexível / firme", def: "Not giving way to pressure; firm and resolute.", ex: "Her principles are strong and completely unyielding." },
+      { id: "protective", text: "Protective", type: "habit", pt: "Protetor(a)", def: "Having a strong wish to keep someone safe.", ex: "My middle brother has always been fiercely protective of me." },
+      { id: "socialite", text: "Socialite", type: "habit", pt: "Sociável / da alta sociedade", def: "A person fond of social activities and prominent gatherings.", ex: "She knows everyone in town like a genuine socialite." },
+      { id: "expressive_sister", text: "Expressive (Sister-in-laws)", type: "habit", pt: "Expressiva(s)", def: "Effectively conveying feelings or opinions with warmth.", ex: "My sister-in-laws are so expressive when they tell stories." },
+      { id: "expressive_niece", text: "Expressive (Niece)", type: "habit", pt: "Expressiva", def: "Full of expressions, emotions, and lively gestures.", ex: "My 15-year-old niece is very expressive and creative." },
+      { id: "excitable", text: "Excitable", type: "habit", pt: "Entusiasmado(a) / agitado(a)", def: "Easily excited or stimulated.", ex: "She gets so excitable when sharing news from school." },
+      { id: "introvert", text: "Introvert", type: "habit", pt: "Introvertido(a)", def: "A quiet person who enjoys solitary or artistic time.", ex: "She is a reflective introvert who loves focusing on dance." },
+      { id: "energetic", text: "Energetic", type: "habit", pt: "Cheio(a) de energia", def: "Possessing high physical energy and vitality.", ex: "My 13-year-old nephew is always energetic on the soccer pitch." },
+      { id: "playful", text: "Playful", type: "habit", pt: "Brincalhão / travesso", def: "Fond of games and amusement; lighthearted.", ex: "The 10-year-old is constantly playful and making jokes." },
+
+      // Personal details from whiteboard
+      { id: "horse_riding", text: "Loves horse riding", type: "detail", pt: "Ama andar a cavalo", def: "Equestrian hobby and country passion.", ex: "He spends every weekend at the stables because he loves horse riding." },
+      { id: "cowboys_outdoors", text: "Cowboys, they love outdoors", type: "detail", pt: "Estilo cowboy & ar livre", def: "Passionate about rural and outdoor lifestyle.", ex: "They enjoy the cowboy lifestyle and being out in nature." },
+      { id: "lives_monaco", text: "Lives in Monaco (15 y.o.)", type: "detail", pt: "Mora em Mônaco", def: "Residence in the Mediterranean principality.", ex: "Her niece lives in Monaco and trains diligently." },
+      { id: "dancing", text: "Dancing", type: "detail", pt: "Dança", def: "Graceful discipline and artistic dance passion.", ex: "She dedicates hours every day to dancing." },
+      { id: "deep_faith", text: "Deep faith", type: "detail", pt: "Fé profunda", def: "Personal spiritual strength and devotion.", ex: "She possesses an inspiring deep faith in life." },
+      { id: "dormitory", text: "Boarding in dormitory", type: "detail", pt: "Mora em dormitório escolar", def: "Lives in student housing.", ex: "She lives in a dormitory while attending high school." },
+      { id: "godmother", text: "Mariana is GodMother", type: "detail", pt: "Mariana é Madrinha", def: "Special familial and spiritual sponsorship bond.", ex: "Mariana is his proud godmother who cheers him on." },
+      { id: "live_football", text: "Lives for Football", type: "detail", pt: "Respira futebol", def: "Passionate football player and fan.", ex: "He lives for football and never misses a tournament match." },
+      { id: "maturing", text: "Maturing", type: "detail", pt: "Amadurecendo", def: "Growing up with maturity and good judgement.", ex: "He is maturing nicely into a thoughtful young man." },
+      { id: "socialising", text: "Socialising", type: "detail", pt: "Socializando", def: "Making friends and expanding social connections.", ex: "He is active and socialising with new classmates." },
+      { id: "mixture_all", text: "A mixture of all of us", type: "detail", pt: "Uma mistura de todos nós", def: "Combines traits from the whole family tree.", ex: "The 10-year-old nephew is truly a mixture of all of us." },
+      { id: "kids_change_family", text: "Kids change the whole family", type: "detail", pt: "Filhos transformam a família toda", def: "Universal truth that nieces and nephews revitalize family bonds.", ex: "Having kids changes the whole family dynamic for the better." }
+    ];
+
+    // Sentence practice exercises
+    const sentenceExercises = [
+      {
+        id: 1,
+        member: "🤵 Husband",
+        prompt: "My husband is always up at 5:30 AM making coffee and getting ready for the day before anyone else wakes up. He is a total <span class='sentence-blank'>?</span>.",
+        options: ["early bird", "night owl", "couch potato", "busybody"],
+        correct: "early bird",
+        expl: "An 'early bird' is someone who gets up very early in the morning with high energy."
+      },
+      {
+        id: 2,
+        member: "👩‍🦳 Mother",
+        prompt: "You cannot leave a single crumb on the counter when my mother visits because she is a classic <span class='sentence-blank'>?</span> who loves everything spotless.",
+        options: ["neat freak", "couch potato", "partner in crime", "socialite"],
+        correct: "neat freak",
+        expl: "A 'neat freak' is someone obsessed with cleanliness, tidiness, and keeping order."
+      },
+      {
+        id: 3,
+        member: "👯‍♀️ Sister-in-Laws",
+        prompt: "They look so extraordinarily similar in their smiles and style that people say they are the <span class='sentence-blank'>?</span>.",
+        options: ["spitting image of each other", "breadwinner of each other", "partner in crime", "down to earth"],
+        correct: "spitting image of each other",
+        expl: "'Spitting image' means looking identical or being an exact likeness of someone."
+      },
+      {
+        id: 4,
+        member: "🤠 Older Brother",
+        prompt: "Even though my older brother is very successful, he remains humble, sensible, and completely <span class='sentence-blank'>?</span>.",
+        options: ["down to earth", "couch potato", "unyielding", "night owl"],
+        correct: "down to earth",
+        expl: "'Down to earth' describes someone who is practical, humble, and unpretentious."
+      },
+      {
+        id: 5,
+        member: "🤜🤛 Middle Brother",
+        prompt: "Whenever we got into mischief during childhood, my middle brother was always right there beside me as my favorite <span class='sentence-blank'>?</span>.",
+        options: ["partner in crime", "neat freak", "couch potato", "busybody"],
+        correct: "partner in crime",
+        expl: "A 'partner in crime' is an accomplice or close companion in adventures and fun."
+      },
+      {
+        id: 6,
+        member: "🛋️ Brother-in-Law",
+        prompt: "After working all week, my brother-in-law turns into a complete <span class='sentence-blank'>?</span> on Saturday, lounging on the sofa watching series all afternoon.",
+        options: ["couch potato", "early bird", "socialite", "busybody"],
+        correct: "couch potato",
+        expl: "A 'couch potato' is a lazy person who spends their free time sitting or lying on the sofa."
+      },
+      {
+        id: 7,
+        member: "🕯️ Mariana",
+        prompt: "Between working long hours at work and studying English every evening, I feel like I <span class='sentence-blank'>?</span>.",
+        options: ["burn the candle at both ends", "am a couch potato", "take after the outdoors", "run errands at night"],
+        correct: "burn the candle at both ends",
+        expl: "'To burn the candle at both ends' means working hard late at night and early in the morning without enough rest."
+      },
+      {
+        id: 8,
+        member: "👭 Cousin",
+        prompt: "No matter how far apart we live, our relatives constantly call each other and support one another; we are an exceptionally <span class='sentence-blank'>?</span> family.",
+        options: ["close-knit", "unyielding", "couch potato", "spitting image"],
+        correct: "close-knit",
+        expl: "'Close-knit' means deeply united with strong affection and loyalty."
+      },
+      {
+        id: 9,
+        member: "👯‍♀️ Sister-in-Laws",
+        prompt: "Whenever she walks into a party, she immediately starts conversations and lights up the whole room; she is truly the <span class='sentence-blank'>?</span>.",
+        options: ["life of the party", "early bird", "neat freak", "introvert"],
+        correct: "life of the party",
+        expl: "The 'life of the party' is someone vivacious and fun who energizes everyone around them."
+      },
+      {
+        id: 10,
+        member: "🎈 Nephew (10 y.o.)",
+        prompt: "Our 10-year-old nephew has his mother's smile, his father's humor, and Mariana's warmth; he is genuinely <span class='sentence-blank'>?</span>.",
+        options: ["a mixture of all of us", "unyielding", "a couch potato", "burning the candle"],
+        correct: "a mixture of all of us",
+        expl: "This expression highlights how children reflect diverse personalities from across the whole family."
+      }
+    ];
+
+    // Speaking prompts
+    const speakingTasks = [
+      {
+        title: "1. Describing Your Better Half & Morning Habits",
+        badge: "Husband / Early Bird",
+        frame: "<em>'My husband is definitely my <strong>better half</strong> because... Also, when it comes to morning routines, he is a classic <strong>early bird</strong> who...'</em>",
+        model: "My husband is definitely my better half because he always encourages me when I have a busy week. Also, when it comes to morning routines, he is a classic early bird who enjoys starting his day before anyone else."
+      },
+      {
+        title: "2. Contrasting Personalities: Easy Going vs. Neat Freak",
+        badge: "Father & Mother",
+        frame: "<em>'My father is very <strong>easy going</strong> and calm, whereas my mother is more of a <strong>neat freak</strong> who...'</em>",
+        model: "My father is very easy going and rarely gets stressed about little things, whereas my mother is more of a neat freak who wants every single room clean and completely organized."
+      },
+      {
+        title: "3. Family Fun & Adventures",
+        badge: "Middle Brother / Sister-in-Laws",
+        frame: "<em>'My middle brother has always been my <strong>partner in crime</strong>. Meanwhile, at gatherings, my sister-in-laws are the <strong>life of the party</strong> because...'</em>",
+        model: "My middle brother has always been my partner in crime whenever we plan family trips. Meanwhile, at gatherings, my sister-in-laws are the life of the party because they are expressive and love making everyone laugh."
+      },
+      {
+        title: "4. Daily Energy: Burning the Candle at Both Ends",
+        badge: "Mariana's Routine",
+        frame: "<em>'Lately I have been <strong>burning the candle at both ends</strong> because... In order to relax and unwind, I usually...'</em>",
+        model: "Lately I have been burning the candle at both ends because I balance full-time work and my English classes. In order to relax and unwind, I love spending quiet time with my close-knit family."
+      }
+    ];
+
+    // =========================================================
+    // 2. STATE MANAGEMENT
+    // =========================================================
+    let placedState = {}; // { memberId: [wordId, ...] }
+    familyMembers.forEach(m => { placedState[m.id] = []; });
+
+    let selectedChipId = null;
+    let selectedFilter = "all";
+    let soundEnabled = true;
+    let ptEnabled = true;
+    let checkedOnce = false;
+
+    // Web Audio FX
+    const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+    function playBeep(type) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        if (type === 'success') {
+          osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+          osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+          gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.3);
+        } else if (type === 'pop') {
+          osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.12);
+        } else if (type === 'error') {
+          osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.25);
+        }
+      } catch(e) {}
+    }
+
+    // Speech synthesis
+    function speakText(e, text) {
+      if (e) e.stopPropagation();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.92;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Validation helper
+    function isMatchValid(memberId, wordId) {
+      const m = familyMembers.find(x => x.id === memberId);
+      if (!m) return false;
+      if (m.expected.includes(wordId)) return true;
+      if ((wordId === 'expressive_sister' || wordId === 'expressive_niece') &&
+          (memberId === 'sister_in_laws' || memberId === 'niece_15_dorm')) {
+        return true;
+      }
+      return false;
+    }
+
+    // =========================================================
+    // 3. RENDERING FUNCTIONS
+    // =========================================================
+    function renderFamilyCards() {
+      const container = document.getElementById("family-cards-container");
+      container.innerHTML = "";
+
+      familyMembers.forEach(member => {
+        const card = document.createElement("div");
+        card.className = "member-match-card";
+        card.id = `card-${member.id}`;
+
+        const placedWords = placedState[member.id] || [];
+        
+        // Drag over handlers
+        card.ondragover = (e) => { e.preventDefault(); card.classList.add("drag-over"); };
+        card.ondragleave = () => { card.classList.remove("drag-over"); };
+        card.ondrop = (e) => {
+          e.preventDefault();
+          card.classList.remove("drag-over");
+          const wordId = e.dataTransfer.getData("text/plain");
+          if (wordId) assignWordToMember(wordId, member.id);
+        };
+
+        let chipsHtml = "";
+        if (placedWords.length === 0) {
+          chipsHtml = `<div class="slot-placeholder">Drop or click here to place words</div>`;
+        } else {
+          chipsHtml = placedWords.map(wId => {
+            const w = wordsCatalog.find(x => x.id === wId);
+            if (!w) return "";
+            
+            let statusClass = "";
+            if (checkedOnce) {
+              statusClass = isMatchValid(member.id, wId) ? "correct" : "incorrect";
+            }
+
+            return `
+              <span class="placed-chip ${statusClass}">
+                <button class="chip-speak-btn" onclick="speakText(event, '${w.text.replace(/'/g, "\\'")}')">🔊</button>
+                <span>${w.text}</span>
+                <button class="remove-btn" title="Remove" onclick="unassignWord('${wId}', event)">×</button>
+              </span>
+            `;
+          }).join("");
+        }
+
+        card.innerHTML = `
+          <div class="card-head">
+            <div class="member-avatar">${member.emoji}</div>
+            <div class="member-info">
+              <div class="member-name">
+                <span>${member.name}</span>
+                <span style="font-size: 0.78rem; font-weight: 700; color: #94a3b8;">${placedWords.length}/${member.expected.length}</span>
+              </div>
+              <span class="member-tag">${member.role}</span>
+            </div>
+          </div>
+          <div class="card-slot-area" onclick="handleSlotClick('${member.id}')">
+            ${chipsHtml}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateStats();
+    }
+
+    function renderWordBank() {
+      const container = document.getElementById("bank-words-container");
+      container.innerHTML = "";
+
+      // Words currently placed anywhere
+      const allPlaced = Object.values(placedState).flat();
+      const unplaced = wordsCatalog.filter(w => !allPlaced.includes(w.id));
+
+      document.getElementById("bank-remaining-count").innerText = `${unplaced.length} remaining`;
+
+      const filtered = selectedFilter === "all" 
+        ? unplaced 
+        : unplaced.filter(w => w.type === selectedFilter);
+
+      if (filtered.length === 0) {
+        if (unplaced.length === 0) {
+          container.innerHTML = `<div style="padding: 20px; text-align: center; color: #059669; font-weight: 700;">🌟 All words placed! Click 'Check Homework' below.</div>`;
+        } else {
+          container.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">No words in this category remaining.</div>`;
+        }
+        return;
+      }
+
+      filtered.forEach(word => {
+        const chip = document.createElement("div");
+        const isSelected = selectedChipId === word.id;
+        chip.className = `word-chip is-${word.type} ${isSelected ? 'selected' : ''}`;
+        chip.draggable = true;
+
+        chip.ondragstart = (e) => {
+          e.dataTransfer.setData("text/plain", word.id);
+          selectChip(word.id);
+        };
+
+        chip.onclick = (e) => {
+          e.stopPropagation();
+          selectChip(word.id);
+        };
+
+        chip.innerHTML = `
+          <div class="chip-main">
+            <button class="chip-speak-btn" onclick="speakText(event, '${word.text.replace(/'/g, "\\'")}')" title="Listen">🔊</button>
+            <span>${word.text}</span>
+          </div>
+          <span class="chip-pt">${word.pt}</span>
+        `;
+
+        container.appendChild(chip);
+      });
+    }
+
+    // Assigning & Unassigning Logic
+    function selectChip(wordId) {
+      selectedChipId = (selectedChipId === wordId) ? null : wordId;
+      playBeep('pop');
+      renderWordBank();
+      
+      // Highlight slot areas if a chip is selected
+      document.querySelectorAll(".card-slot-area").forEach(el => {
+        if (selectedChipId) {
+          el.classList.add("selected-target");
+        } else {
+          el.classList.remove("selected-target");
+        }
+      });
+    }
+
+    function handleSlotClick(memberId) {
+      if (selectedChipId) {
+        assignWordToMember(selectedChipId, memberId);
+        selectedChipId = null;
+        document.querySelectorAll(".card-slot-area").forEach(el => el.classList.remove("selected-target"));
+      }
+    }
+
+    function assignWordToMember(wordId, targetMemberId) {
+      // Remove from any member it currently belongs to
+      Object.keys(placedState).forEach(mId => {
+        placedState[mId] = placedState[mId].filter(id => id !== wordId);
+      });
+
+      // Add to target member
+      if (!placedState[targetMemberId].includes(wordId)) {
+        placedState[targetMemberId].push(wordId);
+      }
+
+      playBeep('success');
+      checkedOnce = false; // Reset check flags on edit
+      resetCardHighlightStyles();
+      renderFamilyCards();
+      renderWordBank();
+    }
+
+    function unassignWord(wordId, e) {
+      if (e) e.stopPropagation();
+      Object.keys(placedState).forEach(mId => {
+        placedState[mId] = placedState[mId].filter(id => id !== wordId);
+      });
+      playBeep('pop');
+      checkedOnce = false;
+      resetCardHighlightStyles();
+      renderFamilyCards();
+      renderWordBank();
+    }
+
+    function resetCardHighlightStyles() {
+      document.querySelectorAll(".member-match-card").forEach(c => {
+        c.classList.remove("all-correct", "has-error");
+      });
+      document.getElementById("feedback-card").style.display = "none";
+    }
+
+    function filterBank(cat, btn) {
+      selectedFilter = cat;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderWordBank();
+    }
+
+    function updateStats() {
+      const allPlaced = Object.values(placedState).flat();
+      const totalWords = wordsCatalog.length;
+      const progressPercent = Math.round((allPlaced.length / totalWords) * 100);
+
+      document.getElementById("stat-progress").innerText = `${progressPercent}%`;
+      document.getElementById("placed-summary").innerText = `${allPlaced.length} of ${totalWords} words placed`;
+
+      let correctCount = 0;
+      familyMembers.forEach(m => {
+        const placed = placedState[m.id] || [];
+        placed.forEach(wId => {
+          if (isMatchValid(m.id, wId)) correctCount++;
+        });
+      });
+
+      document.getElementById("stat-score").innerText = `${correctCount} / ${totalWords}`;
+    }
+
+    // Checking matches
+    function checkMatches() {
+      checkedOnce = true;
+      let totalCorrect = 0;
+      let totalWords = wordsCatalog.length;
+      let allPlacedCount = Object.values(placedState).flat().length;
+
+      familyMembers.forEach(m => {
+        const card = document.getElementById(`card-${m.id}`);
+        const placed = placedState[m.id] || [];
+        
+        let memberCorrect = 0;
+        let memberErrors = 0;
+
+        placed.forEach(wId => {
+          if (isMatchValid(m.id, wId)) {
+            memberCorrect++;
+            totalCorrect++;
+          } else {
+            memberErrors++;
+          }
+        });
+
+        card.classList.remove("all-correct", "has-error");
+        if (memberErrors > 0) {
+          card.classList.add("has-error");
+        } else if (memberCorrect === m.expected.length && placed.length === m.expected.length) {
+          card.classList.add("all-correct");
+        }
+      });
+
+      renderFamilyCards();
+
+      const feedbackCard = document.getElementById("feedback-card");
+      const title = document.getElementById("feedback-title");
+      const stars = document.getElementById("feedback-stars");
+      const desc = document.getElementById("feedback-desc");
+
+      feedbackCard.style.display = "block";
+
+      if (totalCorrect === totalWords) {
+        title.innerText = "🏆 Perfect Score, Mariana! Parabéns!";
+        stars.innerText = "⭐⭐⭐⭐⭐";
+        desc.innerText = `Sensational! You placed all ${totalCorrect} of ${totalWords} idioms and descriptors precisely with their family members.`;
+        document.getElementById("stat-status").innerText = "Completed 100%";
+        document.getElementById("stat-status").style.color = "#10b981";
+        triggerConfetti();
+        playBeep('success');
+      } else {
+        title.innerText = `Keep Going! ${totalCorrect} of ${totalWords} Correct`;
+        stars.innerText = totalCorrect > 20 ? "⭐⭐⭐⭐" : (totalCorrect > 12 ? "⭐⭐⭐" : "⭐⭐");
+        desc.innerText = `You have placed ${allPlacedCount} words so far with ${totalCorrect} in the right place. Red chips show items that belong to another family member. Give it another try!`;
+        document.getElementById("stat-status").innerText = `${totalCorrect} Correct`;
+        playBeep('pop');
+      }
+
+      feedbackCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function giveClue() {
+      // Find an unplaced or misplaced item and give its answer
+      for (const m of familyMembers) {
+        for (const expId of m.expected) {
+          const isPlacedCorrectly = placedState[m.id] && placedState[m.id].includes(expId);
+          if (!isPlacedCorrectly) {
+            const word = wordsCatalog.find(w => w.id === expId);
+            assignWordToMember(expId, m.id);
+            alert(`💡 Clue: "${word.text}" belongs to ${m.name} (${m.role})! We have placed it for you.`);
+            return;
+          }
+        }
+      }
+      alert("All words are already placed in their correct slots!");
+    }
+
+    function resetBoard() {
+      if (confirm("Reset all placed words back to the Word Bank?")) {
+        familyMembers.forEach(m => { placedState[m.id] = []; });
+        checkedOnce = false;
+        selectedChipId = null;
+        resetCardHighlightStyles();
+        document.getElementById("stat-status").innerText = "In Progress";
+        document.getElementById("stat-status").style.color = "var(--text-muted)";
+        renderFamilyCards();
+        renderWordBank();
+      }
+    }
+
+    // =========================================================
+    // 4. MODE 2: SENTENCE CHALLENGE
+    // =========================================================
+    let userSentenceAnswers = {};
+
+    function renderSentences() {
+      const container = document.getElementById("sentences-list");
+      container.innerHTML = "";
+
+      sentenceExercises.forEach(ex => {
+        const card = document.createElement("div");
+        card.className = "sentence-card";
+        card.id = `sentence-card-${ex.id}`;
+
+        const isAnswered = userSentenceAnswers[ex.id] !== undefined;
+        const userAnswer = userSentenceAnswers[ex.id];
+
+        let optionsHtml = ex.options.map(opt => {
+          let optClass = "";
+          if (isAnswered) {
+            if (opt === ex.correct) optClass = "selected-correct";
+            else if (opt === userAnswer && opt !== ex.correct) optClass = "selected-wrong";
+          }
+
+          return `
+            <button class="option-btn ${optClass}" 
+                    ${isAnswered ? 'disabled' : ''} 
+                    onclick="answerSentence(${ex.id}, '${opt.replace(/'/g, "\\'")}')">
+              <span>${opt}</span>
+              ${isAnswered && opt === ex.correct ? '✓' : ''}
+              ${isAnswered && opt === userAnswer && opt !== ex.correct ? '✗' : ''}
+            </button>
+          `;
+        }).join("");
+
+        let promptText = ex.prompt;
+        if (isAnswered) {
+          const color = (userAnswer === ex.correct) ? "#166534" : "#991b1b";
+          promptText = promptText.replace("<span class='sentence-blank'>?</span>", `<strong style="color: ${color}; text-decoration: underline;">${userAnswer}</strong>`);
+        }
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="sentence-member-badge">${ex.member}</div>
+            <button class="chip-speak-btn" onclick="speakText(event, '${ex.prompt.replace(/<[^>]*>?/gm, '').replace(/'/g, "\\'")}')" title="Listen to Sentence">🔊 Listen</button>
+          </div>
+          <div class="sentence-prompt">${promptText}</div>
+          <div class="options-grid">
+            ${optionsHtml}
+          </div>
+          <div class="sentence-explanation" style="${isAnswered ? 'display:block;' : 'display:none;'}">
+            💡 <strong>Explanation:</strong> ${ex.expl}
+          </div>
+        `;
+
+        if (isAnswered) {
+          if (userAnswer === ex.correct) card.className = "sentence-card answered-correct";
+          else card.className = "sentence-card answered-wrong";
+        }
+
+        container.appendChild(card);
+      });
+
+      // Update badge
+      const answeredCount = Object.keys(userSentenceAnswers).length;
+      document.getElementById("sentence-count-badge").innerText = `${answeredCount}/${sentenceExercises.length}`;
+    }
+
+    function answerSentence(exId, selectedOption) {
+      userSentenceAnswers[exId] = selectedOption;
+      const ex = sentenceExercises.find(x => x.id === exId);
+      if (selectedOption === ex.correct) playBeep('success');
+      else playBeep('error');
+      renderSentences();
+
+      // Check if all answered
+      if (Object.keys(userSentenceAnswers).length === sentenceExercises.length) {
+        let correctCount = 0;
+        sentenceExercises.forEach(e => {
+          if (userSentenceAnswers[e.id] === e.correct) correctCount++;
+        });
+        if (correctCount >= 8) triggerConfetti();
+      }
+    }
+
+    // =========================================================
+    // 5. MODE 3: VOCABULARY GUIDE
+    // =========================================================
+    function renderGuide() {
+      const container = document.getElementById("guide-cards-container");
+      container.innerHTML = "";
+
+      wordsCatalog.forEach(w => {
+        const card = document.createElement("div");
+        card.className = "guide-card";
+
+        card.innerHTML = `
+          <div>
+            <div class="guide-top">
+              <div>
+                <div class="guide-term">${w.text}</div>
+                <div class="guide-pt">${w.pt}</div>
+              </div>
+              <button class="chip-speak-btn" style="font-size: 1.1rem;" onclick="speakText(event, '${w.text.replace(/'/g, "\\'")}')" title="Listen">🔊</button>
+            </div>
+            <p class="guide-def" style="margin-top: 10px;">${w.def}</p>
+          </div>
+          <div class="guide-example">
+            "${w.ex}"
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // =========================================================
+    // 6. MODE 4: SPEAKING PRACTICE
+    // =========================================================
+    function renderSpeaking() {
+      const container = document.getElementById("speaking-container");
+      container.innerHTML = "";
+
+      speakingTasks.forEach((task, idx) => {
+        const card = document.createElement("div");
+        card.className = "speaking-card";
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h3>${task.title}</h3>
+            <span style="font-size: 0.76rem; font-weight: 700; color: var(--purple); background: var(--purple-subtle); padding: 4px 10px; border-radius: 99px;">
+              ${task.badge}
+            </span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">Fill in the blanks with your own words to describe your family:</p>
+          <div class="speaking-frame-box">${task.frame}</div>
+          
+          <div class="speaking-controls">
+            <button class="speaking-btn" onclick="speakText(event, '${task.model.replace(/'/g, "\\'")}')">
+              🔊 Hear Model Answer
+            </button>
+            <button class="speaking-btn" id="mic-btn-${idx}" onclick="toggleMic(${idx})">
+              🎙️ Practice Speaking Aloud
+            </button>
+            <span id="mic-status-${idx}" style="font-size: 0.85rem; color: #64748b; font-weight: 600;"></span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    let isRecording = false;
+    function toggleMic(idx) {
+      const statusSpan = document.getElementById(`mic-status-${idx}`);
+      const btn = document.getElementById(`mic-btn-${idx}`);
+
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        statusSpan.innerText = "🗣️ Speak aloud and record voice note!";
+        return;
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+
+      btn.classList.add("record-active");
+      btn.innerHTML = "🔴 Listening... Speak now";
+      statusSpan.innerText = "Microphone active...";
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        statusSpan.innerHTML = `✅ Heard: <em>"${transcript}"</em>`;
+        btn.classList.remove("record-active");
+        btn.innerHTML = "🎙️ Practice Speaking Aloud";
+      };
+
+      recognition.onerror = () => {
+        btn.classList.remove("record-active");
+        btn.innerHTML = "🎙️ Practice Speaking Aloud";
+        statusSpan.innerText = "Done! Great pronunciation effort!";
+      };
+
+      recognition.onend = () => {
+        btn.classList.remove("record-active");
+        btn.innerHTML = "🎙️ Practice Speaking Aloud";
+      };
+
+      recognition.start();
+    }
+
+    // =========================================================
+    // 7. NAVIGATION & CONTROLS
+    // =========================================================
+    function switchMode(modeNumber) {
+      [1, 2, 3, 4].forEach(i => {
+        document.getElementById(`view-mode-${i}`).classList.toggle("active", i === modeNumber);
+        document.getElementById(`tab-btn-${i}`).classList.toggle("active", i === modeNumber);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function togglePortuguese() {
+      ptEnabled = !ptEnabled;
+      document.body.classList.toggle("show-pt", ptEnabled);
+      const btn = document.getElementById("pt-toggle-btn");
+      btn.classList.toggle("active", ptEnabled);
+      btn.innerHTML = `<span>🇧🇷</span> Hints: ${ptEnabled ? 'ON' : 'OFF'}`;
+    }
+
+    function toggleAudioFx() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("audio-toggle-btn");
+      btn.classList.toggle("active", soundEnabled);
+      btn.innerHTML = `<span>🔊</span> Sound: ${soundEnabled ? 'ON' : 'OFF'}`;
+    }
+
+    // =========================================================
+    // 8. HOMEWORK REPORT MODAL
+    // =========================================================
+    function openReportModal() {
+      let totalCorrect = 0;
+      familyMembers.forEach(m => {
+        const placed = placedState[m.id] || [];
+        placed.forEach(wId => {
+          if (isMatchValid(m.id, wId)) totalCorrect++;
+        });
+      });
+
+      let sentenceCorrect = 0;
+      sentenceExercises.forEach(e => {
+        if (userSentenceAnswers[e.id] === e.correct) sentenceCorrect++;
+      });
+
+      const totalWords = wordsCatalog.length;
+      const matchScorePercent = Math.round((totalCorrect / totalWords) * 100);
+      const sentenceScorePercent = Math.round((sentenceCorrect / sentenceExercises.length) * 100);
+
+      const html = `
+        <div style="background: #f8fafc; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <strong>Student:</strong> <span>Mariana</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <strong>Date:</strong> <span>${new Date().toLocaleDateString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <strong>Match-Up Score:</strong> <strong style="color: var(--primary);">${totalCorrect} / ${totalWords} (${matchScorePercent}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <strong>Sentence Quiz Score:</strong> <strong style="color: var(--accent);">${sentenceCorrect} / ${sentenceExercises.length} (${sentenceScorePercent}%)</strong>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">Family Member Summary:</h4>
+        <ul style="padding-left: 20px; font-size: 0.88rem; color: #475569; display: flex; flex-direction: column; gap: 4px;">
+          ${familyMembers.map(m => {
+            const placed = (placedState[m.id] || []).map(id => {
+              const w = wordsCatalog.find(x => x.id === id);
+              return w ? w.text : id;
+            }).join(", ");
+            return `<li><strong>${m.name}:</strong> ${placed || '<em>None assigned yet</em>'}</li>`;
+          }).join('')}
+        </ul>
+      `;
+
+      document.getElementById("report-content").innerHTML = html;
+      document.getElementById("report-modal").classList.add("open");
+    }
+
+    function closeReportModal() {
+      document.getElementById("report-modal").classList.remove("open");
+    }
+
+    function copyReportText() {
+      let totalCorrect = 0;
+      familyMembers.forEach(m => {
+        const placed = placedState[m.id] || [];
+        placed.forEach(wId => {
+          if (isMatchValid(m.id, wId)) totalCorrect++;
+        });
+      });
+
+      let text = `ESL HOMEWORK SUBMISSION - MARIANA\nDate: ${new Date().toLocaleDateString()}\n`;
+      text += `Family Matching Score: ${totalCorrect}/${wordsCatalog.length}\n\n`;
+      familyMembers.forEach(m => {
+        const placed = (placedState[m.id] || []).map(id => {
+          const w = wordsCatalog.find(x => x.id === id);
+          return w ? w.text : id;
+        }).join(", ");
+        text += `- ${m.name} (${m.role}): ${placed}\n`;
+      });
+
+      navigator.clipboard.writeText(text);
+      alert("Homework summary copied to clipboard! You can paste it into an email or message.");
+    }
+
+    // =========================================================
+    // 9. LIGHTWEIGHT CANVAS CONFETTI
+    // =========================================================
+    function triggerConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      if (!canvas || !canvas.getContext) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#2563eb", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#3b82f6"];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        frames++;
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35; // gravity
+          p.rotation += p.rotationSpeed;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        if (frames < 120) {
+          requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      render();
+    }
+
+    // Window resize handler for confetti canvas
+    window.onresize = () => {
+      const canvas = document.getElementById("confetti-canvas");
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+
+    // Close modal on click outside
+    window.onclick = (e) => {
+      const modal = document.getElementById("report-modal");
+      if (e.target === modal) closeReportModal();
+    };
+
+    // Initialize
+    renderFamilyCards();
+    renderWordBank();
+    renderSentences();
+    renderGuide();
+    renderSpeaking();
+  </script>
+</body>
+</html>

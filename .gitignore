@@ -1,0 +1,9 @@
+# Ignore large PDF textbook
+*.pdf
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

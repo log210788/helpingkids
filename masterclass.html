@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESL Vocabulary Flip Game & Masterclass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --accent: #10b981;
+      --accent-subtle: #ecfdf5;
+      --border: #e2e8f0;
+      --border-focus: #94a3b8;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+      --shadow-xl: 0 12px 28px -4px rgba(15, 23, 42, 0.1);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-frame {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .level-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Game Banner Link */
+    .game-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 16px 22px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .game-banner a {
+      background: white;
+      color: #1e3a8a;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .game-banner a:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 14px;
+      gap: 4px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+    }
+
+    .nav-tab-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-tab-btn.active {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-content { display: none; animation: fadeIn 0.25s ease; }
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------------------------------------------------- */
+    /* FLASHCARD SCREEN */
+    /* ---------------------------------------------------- */
+    .topic-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .topic-box {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .topic-box:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+    .topic-box-icon { font-size: 2rem; margin-bottom: 10px; }
+    .topic-box h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+    .topic-box p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Flashcard Play View */
+    .flashcard-play-view { display: none; }
+    .flashcard-play-view.active { display: block; }
+
+    .play-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .btn-subtle {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-subtle:hover { border-color: var(--border-focus); }
+
+    .card-scene {
+      perspective: 1000px;
+      width: 100%;
+      height: 320px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+    }
+    .flip-card.is-flipped { transform: rotateY(180deg); }
+
+    .card-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      user-select: none;
+    }
+
+    .card-side.back {
+      transform: rotateY(180deg);
+      background: #fafafa;
+    }
+
+    .card-nav-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .btn-action-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-action-primary:hover { background: var(--primary-hover); }
+
+    .btn-reveal-accent {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .btn-reveal-accent:hover { background: #059669; }
+
+    .pt-box-pill {
+      background: var(--accent-subtle);
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 8px;
+      display: none;
+    }
+    .pt-box-pill.show { display: inline-block; }
+
+    /* Sound Icon */
+    .btn-sound {
+      background: var(--primary-subtle);
+      border: none;
+      color: var(--primary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-sound:hover { transform: scale(1.08); background: var(--primary); color: white; }
+
+    /* Keyboard Shortcuts */
+    .shortcuts-bar {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .kbd {
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    /* Dialogue & Speaking cards */
+    .clean-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+    <!-- Header -->
+    <header>
+      <span class="level-badge">CEFR Level B1 - B2 Intermediate</span>
+      <h1>ESL Vocabulary Practice</h1>
+      <p class="subtitle">Flip cards to master collocations, listen to authentic audio pronunciation, and reveal Portuguese translations.</p>
+    </header>
+
+    <!-- Mariana's Homework Banner -->
+    <div class="game-banner" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); margin-bottom: 12px;">
+      <div>
+        <strong style="display: block; font-size: 1.05rem;">📝 Mariana's Family Matching Homework</strong>
+        <span style="font-size: 0.85rem; opacity: 0.95;">Match family members to whiteboard idioms, test yourself with sentences, and view your score!</span>
+      </div>
+      <a href="mariana_homework.html" style="color: #065f46;">
+        Start Homework →
+      </a>
+    </div>
+
+    <!-- New Family Builder Game Banner -->
+    <div class="game-banner">
+      <div>
+        <strong style="display: block; font-size: 1.05rem;">👨‍👩‍👧‍👦 Play the New Family Builder Game!</strong>
+        <span style="font-size: 0.85rem; opacity: 0.9;">Add family member cards, assign personality traits, and generate your custom story.</span>
+      </div>
+      <a href="family_game.html">
+        Open Family Game →
+      </a>
+    </div>
+
+    <!-- Nav Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="showTab('flashcards')">🎴 Flashcards</button>
+      <button class="nav-tab-btn" onclick="showTab('quiz')">📝 Practice Quiz</button>
+      <button class="nav-tab-btn" onclick="showTab('dialogue')">💬 Dialogue</button>
+      <button class="nav-tab-btn" onclick="showTab('speaking')">🗣️ Speaking</button>
+    </div>
+
+    <!-- TAB 1: FLASHCARDS -->
+    <div id="tab-flashcards" class="tab-content active">
+      <!-- Topic Picker -->
+      <div id="topic-screen">
+        <div class="topic-selection-grid" id="topics-grid"></div>
+      </div>
+
+      <!-- Active Game Screen -->
+      <div id="game-screen" class="flashcard-play-view">
+        <div class="play-top-bar">
+          <button class="btn-subtle" onclick="backToTopics()">← Back to Topics</button>
+          <span id="topic-badge-name" style="font-weight: 700; color: var(--primary);">Family & Relationships</span>
+          <span id="card-counter-label" style="font-weight: 700; color: var(--text-muted); font-size: 0.9rem;">1 / 7</span>
+        </div>
+
+        <div class="card-scene" onclick="flipCard()">
+          <div class="flip-card" id="main-flip-card">
+            
+            <!-- Front -->
+            <div class="card-side front">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">English Term</span>
+                <button class="btn-sound" onclick="playWordVoice(event)">🔊</button>
+              </div>
+              <div>
+                <div id="card-term" style="font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 6px;">Nuclear family</div>
+                <div id="card-ipa" style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-muted); font-size: 1.05rem;">/ˈnjuː.kli.ər ˈfæm.əl.i/</div>
+              </div>
+              <span style="font-size: 0.82rem; color: #94a3b8;">🔄 Click anywhere to turn card</span>
+            </div>
+
+            <!-- Back -->
+            <div class="card-side back">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Definition & Context</span>
+                <button class="btn-sound" onclick="playSentenceVoice(event)">🔊</button>
+              </div>
+              <div style="width: 100%;">
+                <div id="card-definition" style="font-weight: 600; font-size: 1.05rem; margin-bottom: 10px;">A family consisting of parents and children.</div>
+                <div id="card-example" style="font-size: 1.05rem; font-style: italic; color: #334155; background: #f1f5f9; padding: 12px; border-radius: 8px; border-left: 3px solid var(--primary);">"Nuclear families consist of parents and children living together."</div>
+                <div id="card-pt-box" class="pt-box-pill">
+                  🇧🇷 <span id="card-pt-text">Família nuclear</span>
+                </div>
+              </div>
+              <span style="font-size: 0.82rem; color: #94a3b8;">🔄 Click to turn back</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-reveal-accent" onclick="togglePtReveal(event)">
+          👁️ Reveal / Hide Portuguese (🇧🇷)
+        </button>
+
+        <div class="card-nav-buttons">
+          <button class="btn-action-primary" onclick="prevCard(event)">← Previous</button>
+          <button class="btn-action-primary" onclick="nextCard(event)">Next →</button>
+        </div>
+
+        <div class="shortcuts-bar">
+          <span><span class="kbd">Space</span> Flip</span>
+          <span><span class="kbd">←</span> <span class="kbd">→</span> Navigate</span>
+          <span><span class="kbd">P</span> Portuguese</span>
+          <span><span class="kbd">A</span> Audio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRACTICE QUIZ -->
+    <div id="tab-quiz" class="tab-content">
+      <div class="clean-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span style="font-weight: 700; color: var(--primary);" id="quiz-step-title">Question 1 / 5</span>
+          <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-muted);">Score: <span id="quiz-score-val">0</span></span>
+        </div>
+        <h3 id="quiz-question-txt" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; line-height: 1.4;">
+          Question prompt...
+        </h3>
+        <div id="quiz-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+        <div id="quiz-msg-banner" style="display: none; padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 12px;"></div>
+        <button id="quiz-btn-next" onclick="nextQuizQuestion()" class="btn-action-primary" style="display: none; width: 100%;">
+          Next Question →
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 3: DIALOGUE -->
+    <div id="tab-dialogue" class="tab-content">
+      <div class="clean-box">
+        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px;">☕ Dialogue: Catching Up</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem; line-height: 1.5;">
+          <p><strong>Mariana:</strong> Hey Lucas! How have you been? You look exhausted!</p>
+          <p><strong>Lucas:</strong> My <u style="color: var(--primary);">workload</u> has been crazy due to a Friday <u style="color: var(--primary);">deadline</u>. I worked 10 hours of <u style="color: var(--primary);">overtime</u>!</p>
+          <p><strong>Mariana:</strong> How is your daily <u style="color: var(--primary);">commute</u>? Is it still an hour?</p>
+          <p><strong>Lucas:</strong> Yes! Tonight I just want to <u style="color: var(--primary);">unwind</u> and <u style="color: var(--primary);">catch up on</u> my sleep.</p>
+        </div>
+        <button class="btn-action-primary" style="margin-top: 18px; width: 100%;" onclick="playVoice('Mariana: Hey Lucas! You look exhausted! Lucas: My workload has been crazy due to a Friday deadline. I worked 10 hours of overtime! Mariana: How is your daily commute? Lucas: Tonight I just want to unwind and catch up on my sleep.')">
+          🔊 Listen to Full Dialogue
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 4: SPEAKING -->
+    <div id="tab-speaking" class="tab-content">
+      <div class="clean-box">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">👨‍👩‍👧 Family Prompt</h3>
+        <p style="font-weight: 600; margin-bottom: 8px;">"Who in your family do you <u>take after</u> the most?"</p>
+        <p style="font-size: 0.88rem; color: var(--text-muted); background: var(--bg); padding: 10px; border-radius: 8px;">
+          💡 <em>Starter: "People always tell me that I take after my [mother/father] because..."</em>
+        </p>
+      </div>
+
+      <div class="clean-box">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 8px;">💼 Career Prompt</h3>
+        <p style="font-weight: 600; margin-bottom: 8px;">"How do you handle a heavy <u>workload</u> and tight <u>deadlines</u>?"</p>
+        <p style="font-size: 0.88rem; color: var(--text-muted); background: var(--bg); padding: 10px; border-radius: 8px;">
+          💡 <em>Starter: "When my workload gets overwhelming, I prioritize by..."</em>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const data = [
+      {
+        title: "Family & Relationships",
+        desc: "Structures, dynamics, genetics & idioms",
+        icon: "👨‍👩‍👧‍👦",
+        words: [
+          { en: "Husband / Spouse", ipa: "/ˈhʌz.bənd / spaʊs/", def: "A married partner in a marital relationship.", ex: "My husband and I share all household responsibilities.", pt: "Marido / Esposo / Cônjuge" },
+          { en: "The better half", ipa: "/ðə ˈbet.ər hɑːf/", def: "An affectionate term for one's husband or wife.", ex: "Let me introduce you to my better half.", pt: "Minha cara-metade / Meu marido/minha esposa" },
+          { en: "Nuclear family", ipa: "/ˈnjuː.kli.ər ˈfæm.əl.i/", def: "Parents and children living together.", ex: "Nuclear families consist of parents and children living together.", pt: "Família nuclear (pais e filhos)" },
+          { en: "Extended family", ipa: "/ɪkˈsten.dɪd ˈfæm.əl.i/", def: "Grandparents, aunts, uncles, cousins.", ex: "My extended family gets together every Christmas.", pt: "Família extensa / parentela" },
+          { en: "Breadwinner", ipa: "/ˈbredˌwɪn.ər/", def: "Main income earner of the household.", ex: "In many homes, both partners are breadwinners.", pt: "Provedor(a) da casa" },
+          { en: "In-laws", ipa: "/ˈɪn.lɔːz/", def: "Parents and relatives of one's spouse.", ex: "We are hosting my in-laws for dinner this weekend.", pt: "Parentes por casamento (sogros, etc.)" },
+          { en: "Take after (someone)", ipa: "/teɪk ˈɑːf.tər/", def: "Resemble an ancestor in looks or personality.", ex: "She takes after her grandmother in her work ethic.", pt: "Puxar a / Parecer-se com alguém" },
+          { en: "Close-knit", ipa: "/ˌkləʊsˈnɪt/", def: "Bound by intimate and supportive ties.", ex: "They are a close-knit family who talk every day.", pt: "Família unida / próxima" },
+          { en: "The spitting image of", ipa: "/ðə ˈspɪt.ɪŋ ˈɪm.ɪdʒ əv/", def: "Looking identical to someone else.", ex: "Your son is the spitting image of you at that age.", pt: "A cara esculpida e escarrada de" }
+        ]
+      },
+      {
+        title: "Work & Career",
+        desc: "Office routines, workloads & corporate life",
+        icon: "💼",
+        words: [
+          { en: "Workload", ipa: "/ˈwɜːk.ləʊd/", def: "Amount of work assigned to a person.", ex: "I have a heavy workload this week due to the new project.", pt: "Carga de trabalho" },
+          { en: "Deadline", ipa: "/ˈded.laɪn/", def: "Latest cutoff time to submit work.", ex: "We need to finish this report before the deadline on Friday.", pt: "Prazo final" },
+          { en: "Overtime", ipa: "/ˈəʊ.və.taɪm/", def: "Extra hours worked beyond contract.", ex: "He worked ten hours of overtime last week.", pt: "Hora extra" },
+          { en: "Commute", ipa: "/kəˈmjuːt/", def: "Daily journey between home and workplace.", ex: "Her daily commute takes about 45 minutes by train.", pt: "Trajeto diário casa-trabalho" },
+          { en: "To lay off", ipa: "/tuː leɪ ɒf/", def: "Discharge workers for economic reasons.", ex: "The company had to lay off several employees during the crisis.", pt: "Demitir (corte de custos/equipe)" }
+        ]
+      },
+      {
+        title: "Daily Routines",
+        desc: "Habits, rest & lifestyle patterns",
+        icon: "⏰",
+        words: [
+          { en: "Run errands", ipa: "/rʌn ˈer.əndz/", def: "Accomplish short tasks outside the home.", ex: "I need to run a few errands after work today.", pt: "Fazer tarefas / resolver pendências na rua" },
+          { en: "Unwind", ipa: "/ʌnˈwaɪnd/", def: "Relax and decompress after tension.", ex: "I like to unwind by listening to music in the evening.", pt: "Relaxar / descontrair" },
+          { en: "Catch up on", ipa: "/kætʃ ʌp ɒn/", def: "Do postponed tasks or get missing sleep.", ex: "On weekends, I catch up on my sleep.", pt: "Colocar em dia" },
+          { en: "Early bird", ipa: "/ˈɜː.li bɜːd/", def: "Person who naturally wakes up early.", ex: "She is an early bird and wakes up at 5:00 AM every day.", pt: "Pessoa madrugadora" }
+        ]
+      }
+    ];
+
+    const quizData = [
+      { q: "Arthur behaves and looks just like his grandfather. He _____ his grandfather.", opts: ["takes after", "lays off", "catches up on", "runs errands for"], ans: 0, why: "'Take after' means to resemble an ancestor." },
+      { q: "The primary income earner of a family is the _____.", opts: ["overtime", "breadwinner", "in-law", "close-knit"], ans: 1, why: "'Breadwinner' means 'provedor da casa'." },
+      { q: "Sarah must submit her report before 5 PM today. She has a strict _____.", opts: ["commute", "errand", "deadline", "extended family"], ans: 2, why: "'Deadline' means 'prazo final'." },
+      { q: "After working all day, Mark sits on the balcony to _____ with music.", opts: ["lay off", "unwind", "take after", "overtime"], ans: 1, why: "'Unwind' means 'relaxar / descontrair'." },
+      { q: "I have to visit the pharmacy, bank, and grocery store today. I have to _____.", opts: ["run errands", "take after in-laws", "unwind commutes", "lay off deadlines"], ans: 0, why: "'Run errands' means 'resolver pendências na rua'." }
+    ];
+
+    let topicIdx = 0;
+    let cardIdx = 0;
+    let flipped = false;
+    let ptVisible = false;
+
+    let qIdx = 0;
+    let score = 0;
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+
+      const btn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (btn) btn.classList.add('active');
+
+      if (tabId === 'quiz') startQuiz();
+    }
+
+    function initTopics() {
+      const grid = document.getElementById("topics-grid");
+      grid.innerHTML = "";
+      data.forEach((t, i) => {
+        const div = document.createElement("div");
+        div.className = "topic-box";
+        div.onclick = () => selectTopic(i);
+        div.innerHTML = `
+          <div class="topic-box-icon">${t.icon}</div>
+          <h3>${t.title}</h3>
+          <p>${t.desc}</p>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    function selectTopic(idx) {
+      topicIdx = idx;
+      cardIdx = 0;
+      document.getElementById("topic-screen").style.display = "none";
+      document.getElementById("game-screen").classList.add("active");
+      document.getElementById("topic-badge-name").innerText = data[idx].title;
+      renderCard();
+    }
+
+    function backToTopics() {
+      document.getElementById("game-screen").classList.remove("active");
+      document.getElementById("topic-screen").style.display = "block";
+    }
+
+    function renderCard() {
+      const w = data[topicIdx].words[cardIdx];
+      flipped = false;
+      ptVisible = false;
+      document.getElementById("main-flip-card").classList.remove("is-flipped");
+      document.getElementById("card-pt-box").classList.remove("show");
+
+      document.getElementById("card-term").innerText = w.en;
+      document.getElementById("card-ipa").innerText = w.ipa;
+      document.getElementById("card-definition").innerText = w.def;
+      document.getElementById("card-example").innerText = `"${w.ex}"`;
+      document.getElementById("card-pt-text").innerText = w.pt;
+      document.getElementById("card-counter-label").innerText = `${cardIdx + 1} / ${data[topicIdx].words.length}`;
+    }
+
+    function flipCard() {
+      flipped = !flipped;
+      document.getElementById("main-flip-card").classList.toggle("is-flipped", flipped);
+    }
+
+    function togglePtReveal(e) {
+      if (e) e.stopPropagation();
+      ptVisible = !ptVisible;
+      document.getElementById("card-pt-box").classList.toggle("show", ptVisible);
+      if (ptVisible && !flipped) flipCard();
+    }
+
+    function nextCard(e) {
+      if (e) e.stopPropagation();
+      cardIdx = (cardIdx + 1) % data[topicIdx].words.length;
+      renderCard();
+    }
+
+    function prevCard(e) {
+      if (e) e.stopPropagation();
+      cardIdx = (cardIdx - 1 + data[topicIdx].words.length) % data[topicIdx].words.length;
+      renderCard();
+    }
+
+    function playVoice(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.92;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function playWordVoice(e) {
+      if (e) e.stopPropagation();
+      playVoice(data[topicIdx].words[cardIdx].en);
+    }
+
+    function playSentenceVoice(e) {
+      if (e) e.stopPropagation();
+      playVoice(data[topicIdx].words[cardIdx].ex);
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      const gameScreen = document.getElementById("game-screen");
+      if (!gameScreen.classList.contains("active")) return;
+      if (e.code === 'Space') { e.preventDefault(); flipCard(); }
+      else if (e.code === 'ArrowRight') nextCard();
+      else if (e.code === 'ArrowLeft') prevCard();
+      else if (e.key.toLowerCase() === 'p') togglePtReveal();
+      else if (e.key.toLowerCase() === 'a') {
+        if (!flipped) playWordVoice();
+        else playSentenceVoice();
+      }
+    });
+
+    // Quiz
+    function startQuiz() {
+      qIdx = 0;
+      score = 0;
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      if (qIdx >= quizData.length) {
+        document.getElementById("quiz-step-title").innerText = "Completed!";
+        document.getElementById("quiz-question-txt").innerText = `🎉 Well done! You scored ${score} out of ${quizData.length}!`;
+        document.getElementById("quiz-options-list").innerHTML = `
+          <button class="btn-action-primary" onclick="startQuiz()">🔄 Restart Quiz</button>
+        `;
+        document.getElementById("quiz-msg-banner").style.display = "none";
+        document.getElementById("quiz-btn-next").style.display = "none";
+        return;
+      }
+      const q = quizData[qIdx];
+      document.getElementById("quiz-step-title").innerText = `Question ${qIdx + 1} / ${quizData.length}`;
+      document.getElementById("quiz-score-val").innerText = score;
+      document.getElementById("quiz-question-txt").innerText = q.q;
+      document.getElementById("quiz-msg-banner").style.display = "none";
+      document.getElementById("quiz-btn-next").style.display = "none";
+
+      const list = document.getElementById("quiz-options-list");
+      list.innerHTML = "";
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "btn-subtle";
+        btn.style.width = "100%";
+        btn.style.textAlign = "left";
+        btn.style.padding = "12px 16px";
+        btn.innerText = opt;
+        btn.onclick = () => answerQuiz(idx);
+        list.appendChild(btn);
+      });
+    }
+
+    function answerQuiz(selected) {
+      const q = quizData[qIdx];
+      const buttons = document.querySelectorAll("#quiz-options-list button");
+      buttons.forEach(b => b.disabled = true);
+      const msg = document.getElementById("quiz-msg-banner");
+      msg.style.display = "block";
+
+      if (selected === q.ans) {
+        score++;
+        document.getElementById("quiz-score-val").innerText = score;
+        buttons[selected].style.borderColor = "var(--accent)";
+        buttons[selected].style.background = "var(--accent-subtle)";
+        buttons[selected].style.color = "#065f46";
+        msg.style.background = "var(--accent-subtle)";
+        msg.style.color = "#065f46";
+        msg.innerHTML = `<strong>✨ Correct!</strong> ${q.why}`;
+      } else {
+        buttons[selected].style.borderColor = "#ef4444";
+        buttons[selected].style.background = "#fef2f2";
+        buttons[selected].style.color = "#991b1b";
+        buttons[q.ans].style.borderColor = "var(--accent)";
+        buttons[q.ans].style.background = "var(--accent-subtle)";
+        msg.style.background = "#fef2f2";
+        msg.style.color = "#991b1b";
+        msg.innerHTML = `<strong>💡 Incorrect.</strong> Correct answer: <em>"${q.opts[q.ans]}"</em>. ${q.why}`;
+      }
+      document.getElementById("quiz-btn-next").style.display = "block";
+    }
+
+    function nextQuizQuestion() {
+      qIdx++;
+      renderQuiz();
+    }
+
+    initTopics();
+  </script>
+</body>
+</html>
